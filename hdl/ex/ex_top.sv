@@ -1,5 +1,5 @@
 /*
- * exu.sv
+ * ex_top.sv
  *
  *  Created on: 2020-08-05 19:44
  *      Author: Jack Chen <redchenjs@live.com>
@@ -7,7 +7,7 @@
 
 import alu_op_enum::*;
 
-module exu #(
+module ex_top #(
     parameter XLEN = 32
 ) (
     input logic [XLEN-1:0] pc_data_i,
@@ -31,9 +31,9 @@ module exu #(
 logic [XLEN-1:0] alu_a_data;
 logic [XLEN-1:0] alu_b_data;
 
-alu #(
+ex_alu #(
     .XLEN(XLEN)
-) alu (
+) ex_alu (
     .alu_comp_sel_i(alu_comp_sel_i),
 
     .alu_op_0_sel_i(alu_op_0_sel_i),

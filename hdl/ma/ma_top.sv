@@ -1,5 +1,5 @@
 /*
- * mem.sv
+ * ma_top.sv
  *
  *  Created on: 2021-05-28 15:05
  *      Author: Jack Chen <redchenjs@live.com>
@@ -7,7 +7,7 @@
 
 import ram_op_enum::*;
 
-module mem #(
+module ma_top #(
     parameter XLEN = 32
 ) (
     input logic       dram_wr_en_i,

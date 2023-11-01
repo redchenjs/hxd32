@@ -1,5 +1,5 @@
 /*
- * alu.sv
+ * ex_alu.sv
  *
  *  Created on: 2020-08-03 17:49
  *      Author: Jack Chen <redchenjs@live.com>
@@ -7,7 +7,7 @@
 
 import alu_op_enum::*;
 
-module alu #(
+module ex_alu #(
     parameter XLEN = 32
 ) (
     input logic [2:0] alu_comp_sel_i,

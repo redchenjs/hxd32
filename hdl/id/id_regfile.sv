@@ -1,5 +1,5 @@
 /*
- * regfile.sv
+ * id_regfile.sv
  *
  *  Created on: 2020-08-02 16:55
  *      Author: Jack Chen <redchenjs@live.com>
@@ -7,7 +7,7 @@
 
 `include "../config.sv"
 
-module regfile #(
+module id_regfile #(
     parameter XLEN = 32
 ) (
     input logic clk_i,

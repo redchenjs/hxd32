@@ -84,9 +84,9 @@ assign dram_wr_byte_en_io = rst_n_i ? dram_wr_byte_en : {4{1'bz}};
 
 assign cpu_fault_o = inst_error;
 
-ifu #(
+if_top #(
     .XLEN(XLEN)
-) ifu (
+) if_top (
     .clk_i(clk_i),
     .rst_n_i(rst_n_i),
 
@@ -99,9 +99,9 @@ ifu #(
     .pc_data_o(pc_data)
 );
 
-idu #(
+id_top #(
     .XLEN(XLEN)
-) idu (
+) id_top (
     .alu_comp_i(alu_comp),
 
     .pc_inc_sel_r_i(pc_inc_sel_r1),
@@ -164,9 +164,9 @@ regfile #(
     .rs2_rd_data_o(rs2_rd_data)
 );
 
-exu #(
+ex_top #(
     .XLEN(XLEN)
-) exu (
+) ex_top (
     .pc_data_i(pc_data_r1),
 
     .rs1_rd_data_i(rs1_rd_data),
@@ -185,18 +185,18 @@ exu #(
     .alu_data_o(alu_data)
 );
 
-mem #(
+ma_top #(
     .XLEN(XLEN)
-) mem (
+) ma_top (
     .dram_wr_en_i(dram_wr_en),
     .dram_wr_sel_i(dram_wr_sel),
 
     .dram_wr_byte_en_o(dram_wr_byte_en)
 );
 
-wb #(
+wb_top #(
     .XLEN(XLEN)
-) wb (
+) wb_top (
     .rd_wr_en_i(rd_wr_en),
     .rd_wr_sel_i(rd_wr_sel),
     .rd_wr_addr_i(rd_wr_addr),

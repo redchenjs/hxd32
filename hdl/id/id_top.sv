@@ -1,11 +1,11 @@
 /*
- * idu.sv
+ * id_top.sv
  *
  *  Created on: 2020-08-02 16:53
  *      Author: Jack Chen <redchenjs@live.com>
  */
 
-module idu #(
+module id_top #(
     parameter XLEN = 32
 ) (
     input logic alu_comp_i,
@@ -40,9 +40,9 @@ module idu #(
     output logic [XLEN-1:0] imm_rd_data_o
 );
 
-decode #(
+id_decode #(
     .XLEN(XLEN)
-) decode (
+) id_decode (
     .alu_comp_i(alu_comp_i),
 
     .pc_inc_sel_r_i(pc_inc_sel_r_i),

@@ -1,5 +1,5 @@
 /*
- * pc.sv
+ * if_pc.sv
  *
  *  Created on: 2020-08-05 12:27
  *      Author: Jack Chen <redchenjs@live.com>
@@ -7,7 +7,7 @@
 
 import pc_op_enum::*;
 
-module pc #(
+module if_pc #(
     parameter XLEN = 32
 ) (
     input logic clk_i,

@@ -1,5 +1,5 @@
 /*
- * decode.sv
+ * id_decode.sv
  *
  *  Created on: 2020-08-02 16:53
  *      Author: Jack Chen <redchenjs@live.com>
@@ -15,7 +15,7 @@ import ram_op_enum::*;
 
 import opcode_enum::*;
 
-module decode #(
+module id_decode #(
     parameter XLEN = 32
 ) (
     input logic alu_comp_i,

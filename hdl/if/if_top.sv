@@ -1,11 +1,11 @@
 /*
- * ifu.sv
+ * if_top.sv
  *
  *  Created on: 2020-08-05 12:27
  *      Author: Jack Chen <redchenjs@live.com>
  */
 
-module ifu #(
+module if_top #(
     parameter XLEN = 32
 ) (
     input logic clk_i,
@@ -20,7 +20,7 @@ module ifu #(
     output logic [XLEN-1:0] pc_data_o
 );
 
-pc pc(
+if_pc if_pc(
     .clk_i(clk_i),
     .rst_n_i(rst_n_i),
 
