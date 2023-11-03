@@ -5,29 +5,84 @@
  *      Author: Jack Chen <redchenjs@live.com>
  */
 
-import pc_op_enum::*;
+import pc_op_pkg::*;
 
 module hxd32 #(
-    parameter XLEN = 32
+    parameter XLEN = 32,
+
+    parameter ADDR_WIDTH =  3,
+    parameter DATA_WIDTH = 32,
+    parameter STRB_WIDTH =  4
 ) (
-    input logic clk_i,
-    input logic rst_n_i,
+    input logic aclk_i,
+    input logic aresetn_i,
 
-    input logic [XLEN-1:0] iram_rd_data_i,
-    input logic [XLEN-1:0] dram_rd_data_i,
+    /**********************************************
+        ibus read interface (axi4-lite master)
+    **********************************************/
 
-    inout wire [XLEN-1:0] iram_rd_addr_io,
-    inout wire [XLEN-1:0] dram_rd_addr_io,
+    // read address channel
+    input  logic [ADDR_WIDTH-1:0] ibus_araddr_i,
+    input  logic                  ibus_arprot_i,
+    input  logic                  ibus_arvalid_i,
+    output logic                  ibus_arready_o,
 
-    inout wire [XLEN-1:0] dram_wr_addr_io,
-    inout wire [XLEN-1:0] dram_wr_data_io,
-    inout wire      [3:0] dram_wr_byte_en_io,
+    // read data channel
+    output logic [DATA_WIDTH-1:0] ibus_rdata_o,
+    output logic            [1:0] ibus_rresp_o
+    output logic                  ibus_rvalid_o,
+    input  logic                  ibus_rready_i,
 
-    output logic cpu_fault_o
+    /**********************************************
+        dbus write interface (axi4-lite master)
+    **********************************************/
+
+    // write address channel
+    input  logic [ADDR_WIDTH-1:0] dbus_awaddr_i,
+    input  logic                  dbus_awprot_i,
+    input  logic                  dbus_awvalid_i,
+    output logic                  dbus_awready_o,
+
+    // write data channel
+    input  logic         [DATA_WIDTH-1:0] dbus_wdata_i,
+    input  logic [$clog2(DATA_WIDTH)-1:0] dbus_wstrb_i,
+    input  logic                          dbus_wvalid_i,
+    output logic                          dbus_wready_o,
+
+    // write response channel
+    output logic [1:0] dbus_bresp_o,
+    output logic       dbus_bvalid_o,
+    input  logic       dbus_bready_i,
+
+    /**********************************************
+        dbus read interface (axi4-lite master)
+    **********************************************/
+
+    // read address channel
+    input  logic [ADDR_WIDTH-1:0] dbus_araddr_i,
+    input  logic                  dbus_arprot_i,
+    input  logic                  dbus_arvalid_i,
+    output logic                  dbus_arready_o,
+
+    // read data channel
+    output logic [DATA_WIDTH-1:0] dbus_rdata_o,
+    output logic            [1:0] dbus_rresp_o
+    output logic                  dbus_rvalid_o,
+    input  logic                  dbus_rready_i,
+
+    /**********************************************
+                    debug signals 
+    **********************************************/
+
+    // control interface
+    input  logic            inst_valid_i,
+    output logic            inst_error_o,
+    output logic [XLEN-1:0] inst_retired_o
 );
 
 logic [XLEN-1:0] inst_data;
 logic            inst_error;
+logic [XLEN-1:0] inst_retired;
 
 logic       pc_wr_en;
 logic [1:0] pc_wr_sel;
@@ -82,7 +137,7 @@ assign dram_wr_addr_io    = rst_n_i ? alu_data : {XLEN{1'bz}};
 assign dram_wr_data_io    = rst_n_i ? rs2_rd_data : {XLEN{1'bz}};
 assign dram_wr_byte_en_io = rst_n_i ? dram_wr_byte_en : {4{1'bz}};
 
-assign cpu_fault_o = inst_error;
+assign inst_error_o = inst_error;
 
 if_top #(
     .XLEN(XLEN)

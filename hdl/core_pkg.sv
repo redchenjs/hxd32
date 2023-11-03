@@ -1,11 +1,11 @@
 /*
- * enum.sv
+ * core_pkg.sv
  *
  *  Created on: 2021-05-20 15:30
  *      Author: Jack Chen <redchenjs@live.com>
  */
 
-package opcode_enum;
+package opcode_pkg;
     typedef enum logic [4:0] {
         OPCODE_G_LOAD      = 5'b00_000,
         OPCODE_G_LOAD_FP   = 5'b00_001,
@@ -88,7 +88,7 @@ package opcode_enum;
     } opcode_c_alu_ext_t;
 endpackage
 
-package pc_op_enum;
+package pc_op_pkg;
     typedef enum logic [1:0] {
         PC_WR_NEXT = 2'b00,
         PC_WR_JALR = 2'b01,
@@ -103,7 +103,7 @@ package pc_op_enum;
     } pc_inc_sel_t;
 endpackage
 
-package reg_op_enum;
+package reg_op_pkg;
     typedef enum logic [1:0] {
         RD_WR_ALU      = 2'b00,
         RD_WR_DRAM     = 2'b01,
@@ -112,7 +112,7 @@ package reg_op_enum;
     } rd_wr_sel_t;
 endpackage
 
-package ram_op_enum;
+package ram_op_pkg;
     typedef enum logic [2:0] {
         DRAM_WR_B = 3'b000,
         DRAM_WR_H = 3'b001,
@@ -128,7 +128,7 @@ package ram_op_enum;
     } dram_rd_sel_t;
 endpackage
 
-package alu_op_enum;
+package alu_op_pkg;
     typedef enum logic [1:0] {
         ALU_A_ZERO = 2'b00,
         ALU_A_RS1  = 2'b01,
